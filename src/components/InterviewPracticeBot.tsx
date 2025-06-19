@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import MarkdownRenderer from './MarkdownRenderer'
 import ResponseActions from './ResponseActions'
+import VoiceInput from './VoiceInput'
 
 interface InterviewSession {
   jobTitle: string
@@ -62,6 +63,7 @@ export default function InterviewPracticeBot() {
   const [streamingResponse, setStreamingResponse] = useState('')
   const [questionCount, setQuestionCount] = useState(0)
   const [sessionStarted, setSessionStarted] = useState(false)
+  const [inputMode, setInputMode] = useState<'text' | 'voice'>('text')
   
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -256,6 +258,11 @@ Stel nu je volgende vraag.`
     }
   }
 
+  const handleVoiceTranscript = (transcript: string) => {
+    // Add the transcript to the current message
+    setCurrentMessage(prev => prev + (prev ? ' ' : '') + transcript)
+  }
+
   const generateFeedback = async () => {
     setIsLoading(true)
     
@@ -335,6 +342,7 @@ Houd de feedback constructief, specifiek en motiverend.`
     setCurrentMessage('')
     setQuestionCount(0)
     setSessionStarted(false)
+    setInputMode('text')
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -547,27 +555,90 @@ Houd de feedback constructief, specifiek en motiverend.`
 
         {/* Input Area */}
         <div className="border-t border-gray-200 p-6">
-          <div className="flex items-end space-x-4">
-            <div className="flex-1">
-              <textarea
-                ref={textareaRef}
-                value={currentMessage}
-                onChange={(e) => setCurrentMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Typ je antwoord hier... (Enter om te verzenden)"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                rows={3}
-                disabled={isLoading || isStreaming}
-              />
+          {/* Input Mode Toggle */}
+          <div className="flex justify-center mb-4">
+            <div className="bg-gray-100 rounded-lg p-1 flex">
+              <button
+                onClick={() => setInputMode('text')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  inputMode === 'text'
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                ⌨️ Typen
+              </button>
+              <button
+                onClick={() => setInputMode('voice')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  inputMode === 'voice'
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
+              >
+                🎤 Spreken
+              </button>
             </div>
-            <button
-              onClick={submitAnswer}
-              disabled={!currentMessage.trim() || isLoading || isStreaming}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {isLoading || isStreaming ? '⏳' : '📤'}
-            </button>
           </div>
+
+          {inputMode === 'text' ? (
+            /* Text Input Mode */
+            <div className="flex items-end space-x-4">
+              <div className="flex-1">
+                <textarea
+                  ref={textareaRef}
+                  value={currentMessage}
+                  onChange={(e) => setCurrentMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Typ je antwoord hier... (Enter om te verzenden)"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  rows={3}
+                  disabled={isLoading || isStreaming}
+                />
+              </div>
+              <button
+                onClick={submitAnswer}
+                disabled={!currentMessage.trim() || isLoading || isStreaming}
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {isLoading || isStreaming ? '⏳' : '📤'}
+              </button>
+            </div>
+          ) : (
+            /* Voice Input Mode */
+            <div className="space-y-4">
+              <div className="flex justify-center">
+                <VoiceInput
+                  onTranscript={handleVoiceTranscript}
+                  isDisabled={isLoading || isStreaming}
+                  className="w-full max-w-md"
+                />
+              </div>
+              
+              {/* Voice Transcript Display */}
+              {currentMessage && (
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                  <div className="text-sm text-gray-600 mb-2">Je antwoord:</div>
+                  <div className="text-gray-800">{currentMessage}</div>
+                  <div className="flex justify-between items-center mt-3">
+                    <button
+                      onClick={() => setCurrentMessage('')}
+                      className="text-sm text-gray-500 hover:text-gray-700"
+                    >
+                      🗑️ Wissen
+                    </button>
+                    <button
+                      onClick={submitAnswer}
+                      disabled={!currentMessage.trim() || isLoading || isStreaming}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+                    >
+                      📤 Verstuur Antwoord
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
           
           <div className="flex justify-between items-center mt-4">
             <button
