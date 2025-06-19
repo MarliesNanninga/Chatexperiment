@@ -29,7 +29,7 @@ export default function ResponseActions({
   const [showSpeedControl, setShowSpeedControl] = useState(false)
   const [ttsAttempts, setTtsAttempts] = useState(0)
   const [ttsTimeoutId, setTtsTimeoutId] = useState<NodeJS.Timeout | null>(null)
-  const [useGeminiTTS, setUseGeminiTTS] = useState(false) // Default to Microsoft TTS
+  const [useGeminiTTS, setUseGeminiTTS] = useState(true) // Default to Gemini TTS
   const [showUniversalSettings, setShowUniversalSettings] = useState(false) // Universal settings dropdown
   const [selectedGeminiVoice, setSelectedGeminiVoice] = useState(GEMINI_VOICES[3]) // Kore as default
   const [selectedGeminiEmotion, setSelectedGeminiEmotion] = useState(EMOTION_STYLES[0]) // Neutraal as default
@@ -886,16 +886,6 @@ export default function ResponseActions({
             <label className="block text-gray-700 text-sm font-medium mb-2">🎙️ TTS Engine</label>
             <div className="flex space-x-2">
               <button
-                onClick={() => setUseGeminiTTS(false)}
-                className={`flex-1 px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
-                  !useGeminiTTS
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-blue-100 border border-gray-200'
-                }`}
-              >
-                🔊 Microsoft TTS
-              </button>
-              <button
                 onClick={() => setUseGeminiTTS(true)}
                 className={`flex-1 px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
                   useGeminiTTS
@@ -904,6 +894,16 @@ export default function ResponseActions({
                 }`}
               >
                 🚀 Gemini AI TTS
+              </button>
+              <button
+                onClick={() => setUseGeminiTTS(false)}
+                className={`flex-1 px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
+                  !useGeminiTTS
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-blue-100 border border-gray-200'
+                }`}
+              >
+                🔊 Microsoft TTS
               </button>
             </div>
           </div>
