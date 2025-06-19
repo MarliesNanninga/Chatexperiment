@@ -1,19 +1,8 @@
-import { GoogleGenerativeAI, Tool } from '@google/generative-ai'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import { NextRequest, NextResponse } from 'next/server'
 
 // Initialize Gemini AI client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
-
-// Helper function to convert base64 to buffer
-function base64ToBuffer(base64: string): Buffer {
-  const base64Data = base64.replace(/^data:image\/\w+;base64,/, '')
-  return Buffer.from(base64Data, 'base64')
-}
-
-// Google Search tool configuratie
-const googleSearchTool = {
-  googleSearch: {}
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,8 +12,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { 
           error: 'API configuratie ontbreekt. Check Environment Variables.',
-          hint: 'Voeg GEMINI_API_KEY toe aan je environment variables',
-          debug: 'Environment variable GEMINI_API_KEY is not set'
+          hint: 'Voeg GEMINI_API_KEY toe aan je environment variables'
         }, 
         { status: 500 }
       )
@@ -32,9 +20,7 @@ export async function POST(request: NextRequest) {
 
     // Parse request data
     const body = await request.json()
-    console.log('Received request body:', body)
-    
-    const { message, image, images, useGrounding = true, aiModel = 'smart' } = body
+    const { message, aiModel = 'smart' } = body
 
     if (!message) {
       return NextResponse.json(
@@ -51,82 +37,25 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Selecteer het juiste model op basis van aiModel
+    // Select the right model based on aiModel
     const modelName = aiModel === 'pro' ? 'gemini-2.5-pro-preview-06-05' :
                      aiModel === 'smart' ? 'gemini-2.5-flash-preview-05-20' :
                      'gemini-2.0-flash-exp' // internet
     const model = genAI.getGenerativeModel({ model: modelName })
 
-    // Configureer tools array - grounding alleen voor Gemini 2.0 (internet model)
-    const tools = (aiModel === 'internet' && useGrounding) ? [googleSearchTool] : []
-
     // Create streaming response
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          let result;
-          
-          // Helper function to generate content with fallback
-          const generateStreamWithFallback = async (requestConfig: any) => {
-            try {
-              return await model.generateContentStream(requestConfig)
-            } catch (error: any) {
-              // If grounding fails, retry without tools
-              if (useGrounding && (error.message?.includes('Search Grounding is not supported') || 
-                                  error.message?.includes('google_search_retrieval is not supported'))) {
-                console.log('Grounding not supported, retrying streaming without grounding...')
-                const { tools, ...configWithoutTools } = requestConfig
-                return await model.generateContentStream(configWithoutTools)
-              }
-              throw error
-            }
-          }
-          
-          if (images && images.length > 0) {
-            // Multiple images - use new images array
-            const imageParts = images.map((imageData: string) => {
-              const imageBuffer = base64ToBuffer(imageData)
-              return {
-                inlineData: {
-                  data: imageBuffer.toString('base64'),
-                  mimeType: 'image/jpeg'
-                }
-              }
-            })
-            
-            result = await generateStreamWithFallback({
-              contents: [{ role: 'user', parts: [{ text: message }, ...imageParts] }],
-              tools: tools
-            })
-          } else if (image) {
-            // Backward compatibility - single image (legacy)
-            const imageBuffer = base64ToBuffer(image)
-            
-            const imagePart = {
-              inlineData: {
-                data: imageBuffer.toString('base64'),
-                mimeType: 'image/jpeg'
-              }
-            }
-            
-            result = await generateStreamWithFallback({
-              contents: [{ role: 'user', parts: [{ text: message }, imagePart] }],
-              tools: tools
-            })
-          } else {
-            // Text only
-            result = await generateStreamWithFallback({
-              contents: [{ role: 'user', parts: [{ text: message }] }],
-              tools: tools
-            })
-          }
+          const result = await model.generateContentStream({
+            contents: [{ role: 'user', parts: [{ text: message }] }]
+          })
 
           // Stream the response token by token
           for await (const chunk of result.stream) {
             const chunkText = chunk.text()
             
             if (chunkText) {
-              // Check if controller is still open before sending
               try {
                 const data = JSON.stringify({ 
                   token: chunkText,
@@ -143,12 +72,11 @@ export async function POST(request: NextRequest) {
             }
           }
 
-          // Send completion signal only if controller is still open
+          // Send completion signal
           try {
             controller.enqueue(
               new TextEncoder().encode(`data: ${JSON.stringify({ done: true })}\n\n`)
             )
-            
             controller.close()
           } catch (error) {
             console.log('Controller already closed during completion')
@@ -157,7 +85,6 @@ export async function POST(request: NextRequest) {
         } catch (error) {
           console.error('Streaming error:', error)
           
-          // Send error to client
           const errorData = JSON.stringify({
             error: true,
             message: error instanceof Error ? error.message : 'Streaming error occurred'
@@ -198,4 +125,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-} 
+}
