@@ -9,13 +9,15 @@ interface ResponseActionsProps {
   isMarkdown?: boolean
   isStreaming?: boolean
   className?: string
+  autoPlay?: boolean
 }
 
 export default function ResponseActions({ 
   content, 
   isMarkdown = true, 
   isStreaming = false,
-  className = ""
+  className = "",
+  autoPlay = false
 }: ResponseActionsProps) {
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copying' | 'success' | 'error'>('idle')
   const [wordDownloadStatus, setWordDownloadStatus] = useState<'idle' | 'generating' | 'success' | 'error'>('idle')
@@ -31,6 +33,7 @@ export default function ResponseActions({
   const [showUniversalSettings, setShowUniversalSettings] = useState(false) // Universal settings dropdown
   const [selectedGeminiVoice, setSelectedGeminiVoice] = useState(GEMINI_VOICES[3]) // Kore as default
   const [selectedGeminiEmotion, setSelectedGeminiEmotion] = useState(EMOTION_STYLES[0]) // Neutraal as default
+  const [hasAutoPlayed, setHasAutoPlayed] = useState(false) // Track if auto-play has been triggered
   
   // Use ref to track speech state without causing re-renders
   const speechActiveRef = useRef(false)
@@ -72,6 +75,26 @@ export default function ResponseActions({
       console.warn('Speech synthesis not supported in this browser')
     }
   }, [])
+
+  // Auto-play TTS when content changes and autoPlay is enabled
+  useEffect(() => {
+    if (autoPlay && content.trim() && !isStreaming && !hasAutoPlayed) {
+      // Small delay to ensure content is fully rendered
+      const timer = setTimeout(() => {
+        if (!useGeminiTTS) {
+          startNewSpeech()
+        }
+        setHasAutoPlayed(true)
+      }, 1000)
+      
+      return () => clearTimeout(timer)
+    }
+  }, [content, autoPlay, isStreaming, hasAutoPlayed, useGeminiTTS])
+
+  // Reset hasAutoPlayed when content changes significantly
+  useEffect(() => {
+    setHasAutoPlayed(false)
+  }, [content])
 
   // Smart voice selection - prefer high quality voices
   const findBestVoice = (voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null => {
@@ -459,9 +482,9 @@ export default function ResponseActions({
     flushBlockquote()
 
     return new Document({
-      creator: "Chatbot AI Assistant",
-      title: "AI Generated Response",
-      description: "Professional document generated from AI chatbot response",
+      creator: "Interview Practice Bot",
+      title: "Interview Feedback",
+      description: "Professional feedback generated from interview practice session",
       sections: [{
         properties: {},
         children: paragraphs.length > 0 ? paragraphs : [
@@ -494,7 +517,7 @@ export default function ResponseActions({
       // Generate filename with timestamp
       const now = new Date()
       const timestamp = now.toISOString().slice(0, 16).replace('T', '_').replace(/:/g, '-')
-      link.download = `Chatbot_Response_${timestamp}.docx`
+      link.download = `Interview_Feedback_${timestamp}.docx`
       
       // Trigger download
       document.body.appendChild(link)
@@ -955,4 +978,4 @@ export default function ResponseActions({
       )}
     </div>
   )
-} 
+}

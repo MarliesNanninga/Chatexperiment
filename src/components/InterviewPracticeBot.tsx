@@ -64,6 +64,7 @@ export default function InterviewPracticeBot() {
   const [questionCount, setQuestionCount] = useState(0)
   const [sessionStarted, setSessionStarted] = useState(false)
   const [inputMode, setInputMode] = useState<'text' | 'voice'>('text')
+  const [autoPlayTTS, setAutoPlayTTS] = useState(true) // Auto-play interviewer messages
   
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -453,6 +454,29 @@ Houd de feedback constructief, specifiek en motiverend.`
             </div>
           </div>
 
+          {/* TTS Settings */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 className="text-sm font-medium text-blue-800 mb-3 flex items-center">
+              🔊 Audio Instellingen
+            </h3>
+            <div className="flex items-center space-x-3">
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={autoPlayTTS}
+                  onChange={(e) => setAutoPlayTTS(e.target.checked)}
+                  className="rounded text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm text-blue-700">
+                  Interviewer vragen automatisch uitspreken
+                </span>
+              </label>
+            </div>
+            <p className="text-xs text-blue-600 mt-2">
+              Voor een realistischere gesprekservaring wordt elke vraag van de interviewer voorgelezen.
+            </p>
+          </div>
+
           {/* Start Button */}
           <div className="flex justify-center pt-4">
             <button
@@ -486,6 +510,23 @@ Houd de feedback constructief, specifiek en motiverend.`
               <div className="text-2xl font-bold">{questionCount}/7</div>
             </div>
           </div>
+          
+          {/* Audio Settings Toggle */}
+          <div className="mt-4 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={autoPlayTTS}
+                  onChange={(e) => setAutoPlayTTS(e.target.checked)}
+                  className="rounded text-blue-300 focus:ring-blue-400"
+                />
+                <span className="text-sm text-blue-100">
+                  🔊 Auto-play interviewer vragen
+                </span>
+              </label>
+            </div>
+          </div>
         </div>
 
         {/* Messages */}
@@ -511,6 +552,19 @@ Houd de feedback constructief, specifiek en motiverend.`
                       {message.type === 'user' ? 'Jij' : 'Interviewer'}
                     </div>
                     <MarkdownRenderer content={message.content} />
+                    
+                    {/* TTS for interviewer messages */}
+                    {message.type === 'interviewer' && (
+                      <div className="mt-3">
+                        <ResponseActions 
+                          content={message.content}
+                          isMarkdown={true}
+                          isStreaming={false}
+                          autoPlay={autoPlayTTS}
+                          className="justify-start"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
