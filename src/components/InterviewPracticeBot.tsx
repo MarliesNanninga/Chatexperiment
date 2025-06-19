@@ -368,51 +368,50 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
   // Setup Phase
   if (currentStep === 'setup') {
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-8">
-        <h2 className="text-2xl font-bold text-blue-800 mb-6 flex items-center">
-          <span className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-            ⚙️
-          </span>
-          Gesprek Instellen
-        </h2>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-gray-900">
+            Gesprek Instellen
+          </h2>
+          <div className="text-sm text-gray-500">
+            Stap 1 van 3
+          </div>
+        </div>
         
         <div className="space-y-6">
           {/* Personal Details */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="text-lg font-semibold text-blue-800 mb-4 flex items-center">
-              <span className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-2">
-                <span className="text-white text-sm">👥</span>
-              </span>
-              Persoonlijke Gegevens
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h3 className="text-base font-semibold text-gray-900 mb-4">
+              👥 Persoonlijke Gegevens
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-blue-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Jouw Naam
                 </label>
                 <input
                   type="text"
                   value={session.intervieweeName}
                   onChange={(e) => setSession(prev => ({ ...prev, intervieweeName: e.target.value }))}
-                  placeholder="bijv. Jan Jansen"
-                  className="w-full p-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                  placeholder="bijv. Marije"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white"
                 />
-                <p className="text-xs text-blue-600 mt-1">De interviewer zal je bij deze naam aanspreken</p>
+                <p className="text-xs text-gray-500 mt-1">De interviewer zal je bij deze naam aanspreken</p>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-blue-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Interviewer Naam
                 </label>
                 <input
                   type="text"
                   value={session.interviewerName}
                   onChange={(e) => setSession(prev => ({ ...prev, interviewerName: e.target.value }))}
-                  placeholder="bijv. Sarah de Vries"
-                  className="w-full p-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                  placeholder="bijv. Bert"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white"
                 />
-                <p className="text-xs text-blue-600 mt-1">Naam van de AI interviewer (optioneel)</p>
+                <p className="text-xs text-gray-500 mt-1">Naam van de AI interviewer (optioneel)</p>
               </div>
             </div>
           </div>
@@ -428,7 +427,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                 value={session.jobTitle}
                 onChange={(e) => setSession(prev => ({ ...prev, jobTitle: e.target.value }))}
                 placeholder="bijv. Marketing Manager"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
               />
             </div>
             
@@ -441,7 +440,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                 value={session.company}
                 onChange={(e) => setSession(prev => ({ ...prev, company: e.target.value }))}
                 placeholder="bijv. TechCorp BV"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -454,7 +453,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
               <select
                 value={session.experience}
                 onChange={(e) => setSession(prev => ({ ...prev, experience: e.target.value }))}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
               >
                 <option value="">Selecteer ervaring</option>
                 <option value="starter">Starter (0-2 jaar)</option>
@@ -473,7 +472,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                 value={session.industry}
                 onChange={(e) => setSession(prev => ({ ...prev, industry: e.target.value }))}
                 placeholder="bijv. IT, Marketing, Finance"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -489,8 +488,8 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                   key={type.id}
                   className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
                     session.sessionType === type.id
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-blue-300'
+                      ? 'border-pink-500 bg-pink-50'
+                      : 'border-gray-200 hover:border-pink-300'
                   }`}
                   onClick={() => setSession(prev => ({ ...prev, sessionType: type.id as any }))}
                 >
@@ -507,8 +506,8 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
           </div>
 
           {/* TTS Settings */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-blue-800 mb-3 flex items-center">
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h3 className="text-sm font-medium text-gray-900 mb-3">
               🔊 Audio Instellingen
             </h3>
             <div className="flex items-center space-x-3">
@@ -517,14 +516,14 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                   type="checkbox"
                   checked={autoPlayTTS}
                   onChange={(e) => setAutoPlayTTS(e.target.checked)}
-                  className="rounded text-blue-600 focus:ring-blue-500"
+                  className="rounded text-pink-600 focus:ring-pink-500"
                 />
-                <span className="text-sm text-blue-700">
+                <span className="text-sm text-gray-700">
                   Interviewer vragen automatisch uitspreken
                 </span>
               </label>
             </div>
-            <p className="text-xs text-blue-600 mt-2">
+            <p className="text-xs text-gray-500 mt-2">
               Voor een realistischere gesprekservaring wordt elke vraag van de interviewer voorgelezen.
             </p>
           </div>
@@ -534,7 +533,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
             <button
               onClick={startInterview}
               disabled={!session.jobTitle.trim()}
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+              className="px-8 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
             >
               🚀 Start Sollicitatiegesprek
             </button>
@@ -547,25 +546,23 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
   // Interview Phase
   if (currentStep === 'interview') {
     return (
-      <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         {/* Header */}
-        <div className="bg-blue-600 text-white p-6">
+        <div className="bg-gradient-to-r from-pink-500 to-pink-600 text-white p-6">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold">Sollicitatiegesprek</h2>
-              <p className="text-blue-100">
-                {session.jobTitle} {session.company && `bij ${session.company}`}
+              <p className="text-pink-100">
+                Uitgever bij {session.company || 'Noordhoff'}
               </p>
               {(session.intervieweeName || session.interviewerName) && (
-                <p className="text-blue-200 text-sm mt-1">
-                  {session.intervieweeName && `Kandidaat: ${session.intervieweeName}`}
-                  {session.intervieweeName && session.interviewerName && ' • '}
-                  {session.interviewerName && `Interviewer: ${session.interviewerName}`}
+                <p className="text-pink-200 text-sm mt-1">
+                  Kandidaat: {session.intervieweeName || 'Marije'} • Interviewer: {session.interviewerName || 'Bert'}
                 </p>
               )}
             </div>
             <div className="text-right">
-              <div className="text-sm text-blue-100">Vraag</div>
+              <div className="text-sm text-pink-100">Vraag</div>
               <div className="text-2xl font-bold">{questionCount}/7</div>
             </div>
           </div>
@@ -578,9 +575,9 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                   type="checkbox"
                   checked={autoPlayTTS}
                   onChange={(e) => setAutoPlayTTS(e.target.checked)}
-                  className="rounded text-blue-300 focus:ring-blue-400"
+                  className="rounded text-pink-300 focus:ring-pink-400"
                 />
-                <span className="text-sm text-blue-100">
+                <span className="text-sm text-pink-100">
                   🔊 Auto-play interviewer vragen
                 </span>
               </label>
@@ -598,8 +595,8 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
               <div
                 className={`max-w-3xl p-4 rounded-lg ${
                   message.type === 'user'
-                    ? 'bg-blue-100 text-blue-900'
-                    : 'bg-gray-100 text-gray-900'
+                    ? 'bg-pink-50 text-pink-900 border border-pink-200'
+                    : 'bg-gray-50 text-gray-900 border border-gray-200'
                 }`}
               >
                 <div className="flex items-start space-x-3">
@@ -636,7 +633,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
           {/* Streaming Response */}
           {isStreaming && streamingResponse && (
             <div className="flex justify-start">
-              <div className="max-w-3xl p-4 rounded-lg bg-gray-100 text-gray-900">
+              <div className="max-w-3xl p-4 rounded-lg bg-gray-50 text-gray-900 border border-gray-200">
                 <div className="flex items-start space-x-3">
                   <div className="text-2xl">👔</div>
                   <div className="flex-1">
@@ -644,7 +641,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                       {session.interviewerName || 'Interviewer'}
                     </div>
                     <MarkdownRenderer content={streamingResponse} />
-                    <span className="inline-block w-2 h-4 bg-blue-600 animate-pulse ml-1"></span>
+                    <span className="inline-block w-2 h-4 bg-pink-600 animate-pulse ml-1"></span>
                   </div>
                 </div>
               </div>
@@ -654,7 +651,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
           {/* Loading State */}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="max-w-3xl p-4 rounded-lg bg-gray-100">
+              <div className="max-w-3xl p-4 rounded-lg bg-gray-50 border border-gray-200">
                 <div className="flex items-center space-x-3">
                   <div className="text-2xl">👔</div>
                   <div className="flex space-x-1">
@@ -682,8 +679,8 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                 onClick={() => setInputMode('text')}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   inputMode === 'text'
-                    ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-600 hover:text-blue-600'
+                    ? 'bg-white text-pink-600 shadow-sm'
+                    : 'text-gray-600 hover:text-pink-600'
                 }`}
               >
                 ⌨️ Typen
@@ -692,8 +689,8 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                 onClick={() => setInputMode('voice')}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   inputMode === 'voice'
-                    ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-600 hover:text-blue-600'
+                    ? 'bg-white text-pink-600 shadow-sm'
+                    : 'text-gray-600 hover:text-pink-600'
                 }`}
               >
                 🎤 Spreken
@@ -711,7 +708,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                   onChange={(e) => setCurrentMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Typ je antwoord hier... (Enter om te verzenden)"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none"
                   rows={3}
                   disabled={isLoading || isStreaming}
                 />
@@ -719,7 +716,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
               <button
                 onClick={submitAnswer}
                 disabled={!currentMessage.trim() || isLoading || isStreaming}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {isLoading || isStreaming ? '⏳' : '📤'}
               </button>
@@ -750,7 +747,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                     <button
                       onClick={submitAnswer}
                       disabled={!currentMessage.trim() || isLoading || isStreaming}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+                      className="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
                     >
                       📤 Verstuur Antwoord
                     </button>
@@ -779,7 +776,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
   // Feedback Phase
   if (currentStep === 'feedback') {
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-8">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         <div className="text-center mb-8">
           <div className="text-6xl mb-4">🎉</div>
           <h2 className="text-2xl font-bold text-green-800 mb-2">
@@ -821,7 +818,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
         <div className="flex justify-center space-x-4 mt-8">
           <button
             onClick={resetSession}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            className="px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-colors"
           >
             🔄 Nieuw Gesprek
           </button>

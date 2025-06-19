@@ -204,7 +204,7 @@ export default function VoiceInput({ onTranscript, isDisabled = false, className
         className={`p-3 rounded-full transition-all duration-200 ${
           isListening
             ? 'bg-red-500 hover:bg-red-600 text-white shadow-lg animate-pulse'
-            : 'bg-blue-100 hover:bg-blue-200 text-blue-600'
+            : 'bg-pink-100 hover:bg-pink-200 text-pink-600'
         } ${
           isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-md'
         }`}
@@ -223,19 +223,19 @@ export default function VoiceInput({ onTranscript, isDisabled = false, className
 
       {/* Status and Transcript Display */}
       {isListening && (
-        <div className="max-w-xs p-3 bg-blue-50 border border-blue-200 rounded-lg text-center">
+        <div className="max-w-xs p-3 bg-pink-50 border border-pink-200 rounded-lg text-center">
           <div className="flex items-center justify-center space-x-1 mb-2">
             <div className="w-1 h-1 bg-red-500 rounded-full animate-bounce"></div>
             <div className="w-1 h-1 bg-red-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
             <div className="w-1 h-1 bg-red-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-            <span className="text-xs text-blue-700 ml-2">Luistert...</span>
+            <span className="text-xs text-pink-700 ml-2">Luistert...</span>
           </div>
           
           {(transcript || interimTranscript) && (
-            <div className="text-sm text-blue-800">
+            <div className="text-sm text-pink-800">
               <div className="font-medium">{transcript}</div>
               {interimTranscript && (
-                <div className="italic text-blue-600">{interimTranscript}</div>
+                <div className="italic text-pink-600">{interimTranscript}</div>
               )}
             </div>
           )}
@@ -263,7 +263,7 @@ export default function VoiceInput({ onTranscript, isDisabled = false, className
               <div>Klik opnieuw om verder te spreken</div>
               <button
                 onClick={clearTranscript}
-                className="text-blue-500 hover:text-blue-700"
+                className="text-pink-500 hover:text-pink-700"
               >
                 Wis transcript
               </button>
