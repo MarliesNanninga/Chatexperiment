@@ -11,6 +11,8 @@ interface InterviewSession {
   experience: string
   industry: string
   sessionType: 'general' | 'behavioral' | 'technical' | 'situational'
+  interviewerName: string
+  intervieweeName: string
 }
 
 interface Message {
@@ -54,7 +56,9 @@ export default function InterviewPracticeBot() {
     company: '',
     experience: '',
     industry: '',
-    sessionType: 'general'
+    sessionType: 'general',
+    interviewerName: '',
+    intervieweeName: ''
   })
   const [messages, setMessages] = useState<Message[]>([])
   const [currentMessage, setCurrentMessage] = useState('')
@@ -87,9 +91,10 @@ export default function InterviewPracticeBot() {
       let prompt = ''
       
       if (isFirstQuestion) {
-        prompt = `Je bent een professionele HR-interviewer die een sollicitatiegesprek voert. 
+        prompt = `Je bent een professionele HR-interviewer${session.interviewerName ? ` genaamd ${session.interviewerName}` : ''} die een sollicitatiegesprek voert. 
 
 KANDIDAAT PROFIEL:
+- Naam: ${session.intervieweeName || 'de kandidaat'}
 - Functie: ${session.jobTitle}
 - Bedrijf: ${session.company}
 - Ervaring: ${session.experience}
@@ -98,20 +103,22 @@ KANDIDAAT PROFIEL:
 
 INSTRUCTIES:
 1. Begin het gesprek op een vriendelijke, professionele manier
-2. Stel jezelf kort voor als interviewer
-3. Stel de eerste vraag passend bij het gekozen gesprektype
-4. Houd de vraag realistisch en relevant voor de functie
-5. Gebruik een natuurlijke, menselijke toon
+2. Stel jezelf kort voor als interviewer${session.interviewerName ? ` (gebruik je naam ${session.interviewerName})` : ''}
+3. Spreek de kandidaat aan met${session.intervieweeName ? ` hun naam (${session.intervieweeName})` : ' hun naam als je die weet'}
+4. Stel de eerste vraag passend bij het gekozen gesprektype
+5. Houd de vraag realistisch en relevant voor de functie
+6. Gebruik een natuurlijke, menselijke toon
 
 Begin nu het sollicitatiegesprek.`
       } else {
         const conversationHistory = messages.slice(-4).map(msg => 
-          `${msg.type === 'user' ? 'Kandidaat' : 'Interviewer'}: ${msg.content}`
+          `${msg.type === 'user' ? (session.intervieweeName || 'Kandidaat') : (session.interviewerName || 'Interviewer')}: ${msg.content}`
         ).join('\n')
 
-        prompt = `Je bent een professionele HR-interviewer die een sollicitatiegesprek voortzet.
+        prompt = `Je bent een professionele HR-interviewer${session.interviewerName ? ` genaamd ${session.interviewerName}` : ''} die een sollicitatiegesprek voortzet.
 
 KANDIDAAT PROFIEL:
+- Naam: ${session.intervieweeName || 'de kandidaat'}
 - Functie: ${session.jobTitle}
 - Ervaring: ${session.experience}
 - Gesprektype: ${SESSION_TYPES.find(t => t.id === session.sessionType)?.name}
@@ -120,13 +127,14 @@ RECENTE CONVERSATIE:
 ${conversationHistory}
 
 INSTRUCTIES:
-1. Reageer kort en professioneel op het laatste antwoord van de kandidaat
+1. Reageer kort en professioneel op het laatste antwoord van ${session.intervieweeName || 'de kandidaat'}
 2. Stel een nieuwe, relevante vervolgvraag
 3. Varieer tussen verschillende vraagtypen binnen het gekozen gesprektype
 4. Houd vragen realistisch en passend bij de functie
 5. Na 5-7 vragen, begin af te ronden
+6. Spreek de kandidaat aan met hun naam waar gepast
 
-${questionCount >= 6 ? 'BELANGRIJK: Dit is een van de laatste vragen. Begin het gesprek af te ronden en bedank de kandidaat.' : ''}
+${questionCount >= 6 ? `BELANGRIJK: Dit is een van de laatste vragen. Begin het gesprek af te ronden en bedank ${session.intervieweeName || 'de kandidaat'}.` : ''}
 
 Stel nu je volgende vraag.`
       }
@@ -211,7 +219,7 @@ Stel nu je volgende vraag.`
         const errorMessage: Message = {
           id: Date.now().toString(),
           type: 'interviewer',
-          content: 'Sorry, er ging iets mis. Laten we het gesprek voortzetten. Kun je me vertellen wat je motivatie is voor deze functie?',
+          content: `Sorry, er ging iets mis. Laten we het gesprek voortzetten. ${session.intervieweeName ? session.intervieweeName + ', k' : 'K'}un je me vertellen wat je motivatie is voor deze functie?`,
           timestamp: new Date()
         }
         setMessages(prev => [...prev, errorMessage])
@@ -269,12 +277,14 @@ Stel nu je volgende vraag.`
     
     try {
       const conversationHistory = messages.map(msg => 
-        `${msg.type === 'user' ? 'Kandidaat' : 'Interviewer'}: ${msg.content}`
+        `${msg.type === 'user' ? (session.intervieweeName || 'Kandidaat') : (session.interviewerName || 'Interviewer')}: ${msg.content}`
       ).join('\n\n')
 
       const prompt = `Analyseer dit sollicitatiegesprek en geef constructieve feedback.
 
 GESPREK DETAILS:
+- Kandidaat: ${session.intervieweeName || 'Onbekend'}
+- Interviewer: ${session.interviewerName || 'Onbekend'}
 - Functie: ${session.jobTitle}
 - Gesprektype: ${SESSION_TYPES.find(t => t.id === session.sessionType)?.name}
 
@@ -284,7 +294,7 @@ ${conversationHistory}
 Geef feedback in deze structuur:
 
 ## 🎯 Algemene Indruk
-[Korte samenvatting van de prestatie]
+[Korte samenvatting van de prestatie van ${session.intervieweeName || 'de kandidaat'}]
 
 ## ✅ Sterke Punten
 [3-4 specifieke dingen die goed gingen]
@@ -298,7 +308,7 @@ Geef feedback in deze structuur:
 ## 📊 Score: X/10
 [Cijfer met korte uitleg]
 
-Houd de feedback constructief, specifiek en motiverend.`
+Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervieweeName ? session.intervieweeName : 'de kandidaat'} direct aan waar gepast.`
 
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -337,7 +347,9 @@ Houd de feedback constructief, specifiek en motiverend.`
       company: '',
       experience: '',
       industry: '',
-      sessionType: 'general'
+      sessionType: 'general',
+      interviewerName: '',
+      intervieweeName: ''
     })
     setMessages([])
     setCurrentMessage('')
@@ -365,6 +377,46 @@ Houd de feedback constructief, specifiek en motiverend.`
         </h2>
         
         <div className="space-y-6">
+          {/* Personal Details */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 className="text-lg font-semibold text-blue-800 mb-4 flex items-center">
+              <span className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-2">
+                <span className="text-white text-sm">👥</span>
+              </span>
+              Persoonlijke Gegevens
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Jouw Naam
+                </label>
+                <input
+                  type="text"
+                  value={session.intervieweeName}
+                  onChange={(e) => setSession(prev => ({ ...prev, intervieweeName: e.target.value }))}
+                  placeholder="bijv. Jan Jansen"
+                  className="w-full p-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                />
+                <p className="text-xs text-blue-600 mt-1">De interviewer zal je bij deze naam aanspreken</p>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Interviewer Naam
+                </label>
+                <input
+                  type="text"
+                  value={session.interviewerName}
+                  onChange={(e) => setSession(prev => ({ ...prev, interviewerName: e.target.value }))}
+                  placeholder="bijv. Sarah de Vries"
+                  className="w-full p-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                />
+                <p className="text-xs text-blue-600 mt-1">Naam van de AI interviewer (optioneel)</p>
+              </div>
+            </div>
+          </div>
+
           {/* Job Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -504,6 +556,13 @@ Houd de feedback constructief, specifiek en motiverend.`
               <p className="text-blue-100">
                 {session.jobTitle} {session.company && `bij ${session.company}`}
               </p>
+              {(session.intervieweeName || session.interviewerName) && (
+                <p className="text-blue-200 text-sm mt-1">
+                  {session.intervieweeName && `Kandidaat: ${session.intervieweeName}`}
+                  {session.intervieweeName && session.interviewerName && ' • '}
+                  {session.interviewerName && `Interviewer: ${session.interviewerName}`}
+                </p>
+              )}
             </div>
             <div className="text-right">
               <div className="text-sm text-blue-100">Vraag</div>
@@ -549,7 +608,10 @@ Houd de feedback constructief, specifiek en motiverend.`
                   </div>
                   <div className="flex-1">
                     <div className="text-xs text-gray-500 mb-1">
-                      {message.type === 'user' ? 'Jij' : 'Interviewer'}
+                      {message.type === 'user' 
+                        ? (session.intervieweeName || 'Jij') 
+                        : (session.interviewerName || 'Interviewer')
+                      }
                     </div>
                     <MarkdownRenderer content={message.content} />
                     
@@ -578,7 +640,9 @@ Houd de feedback constructief, specifiek en motiverend.`
                 <div className="flex items-start space-x-3">
                   <div className="text-2xl">👔</div>
                   <div className="flex-1">
-                    <div className="text-xs text-gray-500 mb-1">Interviewer</div>
+                    <div className="text-xs text-gray-500 mb-1">
+                      {session.interviewerName || 'Interviewer'}
+                    </div>
                     <MarkdownRenderer content={streamingResponse} />
                     <span className="inline-block w-2 h-4 bg-blue-600 animate-pulse ml-1"></span>
                   </div>
@@ -598,7 +662,9 @@ Houd de feedback constructief, specifiek en motiverend.`
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                   </div>
-                  <span className="text-gray-600 text-sm">Interviewer denkt na...</span>
+                  <span className="text-gray-600 text-sm">
+                    {session.interviewerName || 'Interviewer'} denkt na...
+                  </span>
                 </div>
               </div>
             </div>
@@ -720,7 +786,7 @@ Houd de feedback constructief, specifiek en motiverend.`
             Gesprek Voltooid!
           </h2>
           <p className="text-gray-600">
-            Goed gedaan! Hier is je persoonlijke feedback.
+            {session.intervieweeName ? `Goed gedaan, ${session.intervieweeName}!` : 'Goed gedaan!'} Hier is je persoonlijke feedback.
           </p>
         </div>
 
