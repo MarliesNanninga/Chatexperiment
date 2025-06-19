@@ -25,6 +25,7 @@ Een geavanceerde Next.js applicatie die gebruikers helpt zich voor te bereiden o
 - Intuïtieve setup voor gespreksinstellingen
 - Real-time chat interface
 - Responsive design voor alle apparaten
+- Studiemeester-geïnspireerde styling
 
 ## 🚀 Gesprekstypes
 
@@ -40,7 +41,7 @@ Een geavanceerde Next.js applicatie die gebruikers helpt zich voor te bereiden o
 ### **Framework & Libraries**
 - **Next.js 15** - React framework met server-side rendering
 - **TypeScript** - Type-safe development
-- **Tailwind CSS** - Utility-first styling
+- **Tailwind CSS** - Utility-first styling (Studiemeester theme)
 - **Gemini AI** - Geavanceerde conversatie AI
 
 ### **Core Features**
@@ -49,18 +50,21 @@ Een geavanceerde Next.js applicatie die gebruikers helpt zich voor te bereiden o
 - **Responsive Design** - Optimaal op alle schermformaten
 - **Markdown Rendering** - Rijke tekstopmaak
 - **Export Functionaliteit** - Feedback opslaan als Word document
+- **Voice Input** - Spraakherkenning voor natuurlijke interactie
+- **Text-to-Speech** - Interviewer vragen worden voorgelezen
 
 ## 📋 Gebruiksflow
 
 ### 1. **Setup Fase**
 ```
-Functietitel invoeren → Bedrijf (optioneel) → Ervaring selecteren → 
-Sector specificeren → Gesprektype kiezen → Start gesprek
+Persoonlijke gegevens → Functietitel invoeren → Bedrijf (optioneel) → 
+Ervaring selecteren → Sector specificeren → Gesprektype kiezen → 
+Audio instellingen → Start gesprek
 ```
 
 ### 2. **Interview Fase**
 ```
-AI stelt vraag → Jij antwoordt → AI geeft vervolgvraag → 
+AI stelt vraag → Jij antwoordt (typen of spreken) → AI geeft vervolgvraag → 
 Herhaal 5-7 keer → Gesprek wordt afgesloten
 ```
 
@@ -167,6 +171,21 @@ De AI analyseert gesprekken op basis van:
 - Zelfanalyse en reflectie
 - Professionele gesprekstechnieken
 
+## 🎨 Design & Styling
+
+### **Studiemeester-geïnspireerde Interface**
+- **Clean, moderne uitstraling** met witte achtergronden en subtiele schaduwen
+- **Pink accent kleur** (#ec4899) voor buttons en highlights
+- **Card-based layout** voor overzichtelijke informatie
+- **Consistent typography** met duidelijke hiërarchie
+- **Responsive design** dat perfect werkt op alle apparaten
+
+### **User Experience**
+- **Intuïtieve navigatie** tussen setup, interview en feedback fases
+- **Real-time feedback** tijdens het gesprek
+- **Voice & text input** opties voor natuurlijke interactie
+- **Auto-play TTS** voor realistische gesprekservaring
+
 ## 🔒 Privacy & Veiligheid
 
 - **Geen data opslag** - Gesprekken worden niet permanent bewaard
@@ -202,7 +221,7 @@ git push origin feature/nieuwe-functie
 ### **Versie 3.0**
 - [ ] Team interview simulaties
 - [ ] Real-time emotie analyse
-- [ ] Voice-to-text input
+- [ ] Advanced voice analysis
 - [ ] Mobile app versie
 
 ## 🆘 Support & Troubleshooting
@@ -211,6 +230,7 @@ git push origin feature/nieuwe-functie
 - **API Key errors**: Check environment variables
 - **Streaming issues**: Controleer netwerkverbinding
 - **Performance**: Gebruik moderne browser
+- **Voice input**: Sta microfoon toegang toe
 
 ### **Contact**
 - GitHub Issues voor bugs en feature requests
@@ -226,5 +246,5 @@ Start nu en bouw het zelfvertrouwen op dat je nodig hebt voor je volgende carri�
 
 ---
 
-*Sollicitatiegesprek Trainer v1.0 - Powered by Gemini AI*  
+*Sollicitatiegesprek Trainer v1.0 - Powered by Gemini AI & Studiemeester Design*  
 *Last updated: December 2024*
