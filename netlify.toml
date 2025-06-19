@@ -34,3 +34,9 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Environment variables note
+# You need to add GEMINI_API_KEY in your Netlify dashboard:
+# 1. Go to your site dashboard on Netlify
+# 2. Navigate to Site settings > Environment variables
+# 3. Add: GEMINI_API_KEY = your_actual_api_key_here

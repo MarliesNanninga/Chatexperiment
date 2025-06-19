@@ -4,6 +4,31 @@
 
 Een geavanceerde Next.js applicatie die gebruikers helpt zich voor te bereiden op sollicitatiegesprekken door realistische gesprekssimulaties met AI-feedback.
 
+## 🚀 Live Demo
+
+**Deployed on Netlify:** https://heartfelt-longma-c1226d.netlify.app
+
+## ⚠️ Setup Vereist
+
+**BELANGRIJK:** Voor de applicatie werkt, moet je een Gemini API key toevoegen:
+
+### Voor Netlify Deployment:
+1. Ga naar je [Netlify Dashboard](https://app.netlify.com)
+2. Selecteer je site: `heartfelt-longma-c1226d`
+3. Ga naar **Site settings** → **Environment variables**
+4. Klik **Add variable**
+5. Voeg toe:
+   - **Key:** `GEMINI_API_KEY`
+   - **Value:** Je Gemini API key (krijg je gratis op [Google AI Studio](https://makersuite.google.com/app/apikey))
+6. Klik **Save** en **Deploy** opnieuw
+
+### Gemini API Key Verkrijgen:
+1. Ga naar [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Log in met je Google account
+3. Klik **Create API Key**
+4. Kopieer de gegenereerde key
+5. Voeg deze toe aan je Netlify environment variables
+
 ## ✨ Hoofdfuncties
 
 ### 🎯 **Gepersonaliseerde Gesprekken**
@@ -91,7 +116,7 @@ Verbeterpunten → Score → Opties voor nieuw gesprek
 - Recruitment bureaus als service voor kandidaten
 - Career coaches als ondersteuning tool
 
-## 🔧 Installatie & Setup
+## 🔧 Lokale Installatie & Setup
 
 ### **Vereisten**
 - Node.js 18+ 
@@ -126,7 +151,7 @@ GEMINI_API_KEY=your_gemini_api_key_here
 ### **Netlify (Aanbevolen)**
 1. Connect GitHub repository
 2. Build command: `npm run build`
-3. Environment variables instellen
+3. **BELANGRIJK:** Environment variables instellen in Netlify dashboard
 4. Deploy!
 
 ### **Vercel Alternative**
@@ -134,6 +159,31 @@ GEMINI_API_KEY=your_gemini_api_key_here
 npm install -g vercel
 vercel --prod
 ```
+
+## 🔧 Troubleshooting
+
+### **Veelgestelde Problemen**
+
+#### ❌ "API configuratie ontbreekt" Error
+**Oorzaak:** GEMINI_API_KEY environment variable niet ingesteld
+**Oplossing:** 
+1. Ga naar Netlify Dashboard → Site settings → Environment variables
+2. Voeg `GEMINI_API_KEY` toe met je API key
+3. Redeploy de site
+
+#### ❌ "HTTP error! status: 500" 
+**Oorzaak:** API key is ongeldig of quota overschreden
+**Oplossing:**
+1. Controleer of je API key correct is
+2. Ga naar [Google AI Studio](https://makersuite.google.com/app/apikey) om quota te checken
+3. Genereer eventueel een nieuwe API key
+
+#### ❌ Streaming responses werken niet
+**Oorzaak:** Netwerkverbinding of browser compatibility
+**Oplossing:**
+1. Gebruik een moderne browser (Chrome, Firefox, Safari)
+2. Controleer internetverbinding
+3. Disable ad-blockers tijdelijk
 
 ## 📊 Feedback Systeem
 
@@ -226,12 +276,6 @@ git push origin feature/nieuwe-functie
 
 ## 🆘 Support & Troubleshooting
 
-### **Veelgestelde Problemen**
-- **API Key errors**: Check environment variables
-- **Streaming issues**: Controleer netwerkverbinding
-- **Performance**: Gebruik moderne browser
-- **Voice input**: Sta microfoon toegang toe
-
 ### **Contact**
 - GitHub Issues voor bugs en feature requests
 - Documentatie voor uitgebreide handleidingen
@@ -239,6 +283,8 @@ git push origin feature/nieuwe-functie
 ---
 
 ## 🎉 **Klaar om je Sollicitatievaardigheden te Verbeteren?**
+
+**🔗 Live Demo:** https://heartfelt-longma-c1226d.netlify.app
 
 Start nu en bouw het zelfvertrouwen op dat je nodig hebt voor je volgende carrièrestap!
 
