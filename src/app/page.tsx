@@ -11,7 +11,7 @@ export default function Home() {
               <div className="w-8 h-8 bg-pink-500 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">S</span>
               </div>
-              <h1 className="text-xl font-bold text-gray-900">studiemeester</h1>
+              <h1 className="text-xl font-bold text-gray-900">studiemeister</h1>
             </div>
             <button className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
               + Nieuwe cursus aanmaken

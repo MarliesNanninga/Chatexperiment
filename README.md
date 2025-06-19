@@ -25,7 +25,7 @@ Een geavanceerde Next.js applicatie die gebruikers helpt zich voor te bereiden o
 - Intuïtieve setup voor gespreksinstellingen
 - Real-time chat interface
 - Responsive design voor alle apparaten
-- Studiemeester-geïnspireerde styling
+- Studiemeister-geïnspireerde styling
 
 ## 🚀 Gesprekstypes
 
@@ -41,7 +41,7 @@ Een geavanceerde Next.js applicatie die gebruikers helpt zich voor te bereiden o
 ### **Framework & Libraries**
 - **Next.js 15** - React framework met server-side rendering
 - **TypeScript** - Type-safe development
-- **Tailwind CSS** - Utility-first styling (Studiemeester theme)
+- **Tailwind CSS** - Utility-first styling (Studiemeister theme)
 - **Gemini AI** - Geavanceerde conversatie AI
 
 ### **Core Features**
@@ -173,7 +173,7 @@ De AI analyseert gesprekken op basis van:
 
 ## 🎨 Design & Styling
 
-### **Studiemeester-geïnspireerde Interface**
+### **Studiemeister-geïnspireerde Interface**
 - **Clean, moderne uitstraling** met witte achtergronden en subtiele schaduwen
 - **Pink accent kleur** (#ec4899) voor buttons en highlights
 - **Card-based layout** voor overzichtelijke informatie
@@ -246,5 +246,5 @@ Start nu en bouw het zelfvertrouwen op dat je nodig hebt voor je volgende carri�
 
 ---
 
-*Sollicitatiegesprek Trainer v1.0 - Powered by Gemini AI & Studiemeester Design*  
+*Sollicitatiegesprek Trainer v1.0 - Powered by Gemini AI & Studiemeister Design*  
 *Last updated: December 2024*
