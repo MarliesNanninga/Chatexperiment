@@ -368,26 +368,33 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
   // Setup Phase
   if (currentStep === 'setup') {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-900">
-            Gesprek Instellen
-          </h2>
-          <div className="text-sm text-gray-500">
-            Stap 1 van 3
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-pink-500 to-pink-600 text-white p-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold mb-2">Gesprek Instellen</h2>
+              <p className="text-pink-100">Configureer je persoonlijke sollicitatietraining</p>
+            </div>
+            <div className="bg-white/20 rounded-full px-4 py-2">
+              <span className="text-sm font-medium">Stap 1 van 3</span>
+            </div>
           </div>
         </div>
         
-        <div className="space-y-6">
+        <div className="p-8 space-y-8">
           {/* Personal Details */}
-          <div className="bg-gray-50 rounded-lg p-4">
-            <h3 className="text-base font-semibold text-gray-900 mb-4">
-              👥 Persoonlijke Gegevens
-            </h3>
+          <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6">
+            <div className="flex items-center mb-6">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+                <span className="text-white text-lg">👥</span>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Persoonlijke Gegevens</h3>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Jouw Naam
                 </label>
                 <input
@@ -395,13 +402,13 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                   value={session.intervieweeName}
                   onChange={(e) => setSession(prev => ({ ...prev, intervieweeName: e.target.value }))}
                   placeholder="bijv. Marije"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white"
+                  className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white shadow-sm transition-all duration-200"
                 />
-                <p className="text-xs text-gray-500 mt-1">De interviewer zal je bij deze naam aanspreken</p>
+                <p className="text-xs text-gray-500 mt-2">De interviewer zal je bij deze naam aanspreken</p>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Interviewer Naam
                 </label>
                 <input
@@ -409,17 +416,17 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                   value={session.interviewerName}
                   onChange={(e) => setSession(prev => ({ ...prev, interviewerName: e.target.value }))}
                   placeholder="bijv. Bert"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white"
+                  className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white shadow-sm transition-all duration-200"
                 />
-                <p className="text-xs text-gray-500 mt-1">Naam van de AI interviewer (optioneel)</p>
+                <p className="text-xs text-gray-500 mt-2">Naam van de AI interviewer (optioneel)</p>
               </div>
             </div>
           </div>
 
           {/* Job Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-3">
                 Functietitel *
               </label>
               <input
@@ -427,12 +434,12 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                 value={session.jobTitle}
                 onChange={(e) => setSession(prev => ({ ...prev, jobTitle: e.target.value }))}
                 placeholder="bijv. Marketing Manager"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent shadow-sm transition-all duration-200"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-3">
                 Bedrijf
               </label>
               <input
@@ -440,20 +447,20 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                 value={session.company}
                 onChange={(e) => setSession(prev => ({ ...prev, company: e.target.value }))}
                 placeholder="bijv. TechCorp BV"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent shadow-sm transition-all duration-200"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-3">
                 Je Ervaring
               </label>
               <select
                 value={session.experience}
                 onChange={(e) => setSession(prev => ({ ...prev, experience: e.target.value }))}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent shadow-sm transition-all duration-200"
               >
                 <option value="">Selecteer ervaring</option>
                 <option value="starter">Starter (0-2 jaar)</option>
@@ -464,7 +471,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-3">
                 Sector
               </label>
               <input
@@ -472,32 +479,32 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                 value={session.industry}
                 onChange={(e) => setSession(prev => ({ ...prev, industry: e.target.value }))}
                 placeholder="bijv. IT, Marketing, Finance"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent shadow-sm transition-all duration-200"
               />
             </div>
           </div>
 
           {/* Session Type Selection */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-gray-700 mb-4">
               Type Gesprek
             </label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {SESSION_TYPES.map((type) => (
                 <div
                   key={type.id}
-                  className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                  className={`p-6 border-2 rounded-xl cursor-pointer transition-all duration-200 hover:shadow-md ${
                     session.sessionType === type.id
-                      ? 'border-pink-500 bg-pink-50'
-                      : 'border-gray-200 hover:border-pink-300'
+                      ? 'border-pink-500 bg-pink-50 shadow-md'
+                      : 'border-gray-200 hover:border-pink-300 bg-white'
                   }`}
                   onClick={() => setSession(prev => ({ ...prev, sessionType: type.id as any }))}
                 >
-                  <div className="flex items-start space-x-3">
-                    <span className="text-2xl">{type.icon}</span>
-                    <div>
-                      <h3 className="font-semibold text-gray-800">{type.name}</h3>
-                      <p className="text-sm text-gray-600 mt-1">{type.description}</p>
+                  <div className="flex items-start space-x-4">
+                    <div className="text-3xl">{type.icon}</div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-800 mb-2">{type.name}</h3>
+                      <p className="text-sm text-gray-600">{type.description}</p>
                     </div>
                   </div>
                 </div>
@@ -506,34 +513,37 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
           </div>
 
           {/* TTS Settings */}
-          <div className="bg-gray-50 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-gray-900 mb-3">
-              🔊 Audio Instellingen
-            </h3>
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6">
+            <div className="flex items-center mb-4">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                <span className="text-white text-lg">🔊</span>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Audio Instellingen</h3>
+            </div>
             <div className="flex items-center space-x-3">
-              <label className="flex items-center space-x-2 cursor-pointer">
+              <label className="flex items-center space-x-3 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={autoPlayTTS}
                   onChange={(e) => setAutoPlayTTS(e.target.checked)}
-                  className="rounded text-pink-600 focus:ring-pink-500"
+                  className="w-5 h-5 rounded text-pink-600 focus:ring-pink-500 border-gray-300"
                 />
-                <span className="text-sm text-gray-700">
+                <span className="text-sm text-gray-700 font-medium">
                   Interviewer vragen automatisch uitspreken
                 </span>
               </label>
             </div>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-gray-500 mt-3">
               Voor een realistischere gesprekservaring wordt elke vraag van de interviewer voorgelezen.
             </p>
           </div>
 
           {/* Start Button */}
-          <div className="flex justify-center pt-4">
+          <div className="flex justify-center pt-6">
             <button
               onClick={startInterview}
               disabled={!session.jobTitle.trim()}
-              className="px-8 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+              className="px-10 py-4 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-xl hover:from-pink-600 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               🚀 Start Sollicitatiegesprek
             </button>
@@ -546,14 +556,14 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
   // Interview Phase
   if (currentStep === 'interview') {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-pink-500 to-pink-600 text-white p-6">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold">Sollicitatiegesprek</h2>
               <p className="text-pink-100">
-                Uitgever bij {session.company || 'Noordhoff'}
+                {session.jobTitle} bij {session.company || 'het bedrijf'}
               </p>
               {(session.intervieweeName || session.interviewerName) && (
                 <p className="text-pink-200 text-sm mt-1">
@@ -586,17 +596,17 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
         </div>
 
         {/* Messages */}
-        <div className="h-96 overflow-y-auto p-6 space-y-4">
+        <div className="h-96 overflow-y-auto p-6 space-y-4 bg-gray-50">
           {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-3xl p-4 rounded-lg ${
+                className={`max-w-3xl p-4 rounded-2xl shadow-sm ${
                   message.type === 'user'
-                    ? 'bg-pink-50 text-pink-900 border border-pink-200'
-                    : 'bg-gray-50 text-gray-900 border border-gray-200'
+                    ? 'bg-pink-500 text-white'
+                    : 'bg-white text-gray-900 border border-gray-200'
                 }`}
               >
                 <div className="flex items-start space-x-3">
@@ -604,7 +614,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                     {message.type === 'user' ? '👤' : '👔'}
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs text-gray-500 mb-1">
+                    <div className={`text-xs mb-1 ${message.type === 'user' ? 'text-pink-100' : 'text-gray-500'}`}>
                       {message.type === 'user' 
                         ? (session.intervieweeName || 'Jij') 
                         : (session.interviewerName || 'Interviewer')
@@ -633,7 +643,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
           {/* Streaming Response */}
           {isStreaming && streamingResponse && (
             <div className="flex justify-start">
-              <div className="max-w-3xl p-4 rounded-lg bg-gray-50 text-gray-900 border border-gray-200">
+              <div className="max-w-3xl p-4 rounded-2xl bg-white text-gray-900 border border-gray-200 shadow-sm">
                 <div className="flex items-start space-x-3">
                   <div className="text-2xl">👔</div>
                   <div className="flex-1">
@@ -651,7 +661,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
           {/* Loading State */}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="max-w-3xl p-4 rounded-lg bg-gray-50 border border-gray-200">
+              <div className="max-w-3xl p-4 rounded-2xl bg-white border border-gray-200 shadow-sm">
                 <div className="flex items-center space-x-3">
                   <div className="text-2xl">👔</div>
                   <div className="flex space-x-1">
@@ -671,13 +681,13 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
         </div>
 
         {/* Input Area */}
-        <div className="border-t border-gray-200 p-6">
+        <div className="border-t border-gray-200 p-6 bg-white">
           {/* Input Mode Toggle */}
           <div className="flex justify-center mb-4">
-            <div className="bg-gray-100 rounded-lg p-1 flex">
+            <div className="bg-gray-100 rounded-xl p-1 flex">
               <button
                 onClick={() => setInputMode('text')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-6 py-3 rounded-lg text-sm font-medium transition-colors ${
                   inputMode === 'text'
                     ? 'bg-white text-pink-600 shadow-sm'
                     : 'text-gray-600 hover:text-pink-600'
@@ -687,7 +697,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
               </button>
               <button
                 onClick={() => setInputMode('voice')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-6 py-3 rounded-lg text-sm font-medium transition-colors ${
                   inputMode === 'voice'
                     ? 'bg-white text-pink-600 shadow-sm'
                     : 'text-gray-600 hover:text-pink-600'
@@ -708,7 +718,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                   onChange={(e) => setCurrentMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Typ je antwoord hier... (Enter om te verzenden)"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none"
+                  className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none shadow-sm"
                   rows={3}
                   disabled={isLoading || isStreaming}
                 />
@@ -716,7 +726,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
               <button
                 onClick={submitAnswer}
                 disabled={!currentMessage.trim() || isLoading || isStreaming}
-                className="px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-8 py-4 bg-pink-500 text-white rounded-xl hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md hover:shadow-lg"
               >
                 {isLoading || isStreaming ? '⏳' : '📤'}
               </button>
@@ -734,7 +744,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
               
               {/* Voice Transcript Display */}
               {currentMessage && (
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                   <div className="text-sm text-gray-600 mb-2">Je antwoord:</div>
                   <div className="text-gray-800">{currentMessage}</div>
                   <div className="flex justify-between items-center mt-3">
@@ -747,7 +757,7 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
                     <button
                       onClick={submitAnswer}
                       disabled={!currentMessage.trim() || isLoading || isStreaming}
-                      className="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+                      className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm shadow-md"
                     >
                       📤 Verstuur Antwoord
                     </button>
@@ -776,63 +786,66 @@ Houd de feedback constructief, specifiek en motiverend. Spreek ${session.intervi
   // Feedback Phase
   if (currentStep === 'feedback') {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-        <div className="text-center mb-8">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-green-500 to-green-600 text-white p-8 text-center">
           <div className="text-6xl mb-4">🎉</div>
-          <h2 className="text-2xl font-bold text-green-800 mb-2">
+          <h2 className="text-3xl font-bold mb-2">
             Gesprek Voltooid!
           </h2>
-          <p className="text-gray-600">
+          <p className="text-green-100 text-lg">
             {session.intervieweeName ? `Goed gedaan, ${session.intervieweeName}!` : 'Goed gedaan!'} Hier is je persoonlijke feedback.
           </p>
         </div>
 
-        {/* Generate Feedback Button */}
-        {messages.length === 0 || messages[messages.length - 1].type === 'user' ? (
-          <div className="text-center mb-8">
+        <div className="p-8">
+          {/* Generate Feedback Button */}
+          {messages.length === 0 || messages[messages.length - 1].type === 'user' ? (
+            <div className="text-center mb-8">
+              <button
+                onClick={generateFeedback}
+                disabled={isLoading}
+                className="px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                {isLoading ? '⏳ Feedback wordt gegenereerd...' : '📊 Genereer Feedback'}
+              </button>
+            </div>
+          ) : (
+            /* Feedback Display */
+            <div className="space-y-6">
+              <div className="bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-xl p-6">
+                <MarkdownRenderer content={messages[messages.length - 1].content} />
+                
+                <ResponseActions 
+                  content={messages[messages.length - 1].content}
+                  isMarkdown={true}
+                  isStreaming={false}
+                  className="mt-4"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
             <button
-              onClick={generateFeedback}
-              disabled={isLoading}
-              className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 transition-colors"
+              onClick={resetSession}
+              className="px-8 py-4 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-xl hover:from-pink-600 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
-              {isLoading ? '⏳ Feedback wordt gegenereerd...' : '📊 Genereer Feedback'}
+              🔄 Nieuw Gesprek
+            </button>
+            <button
+              onClick={() => {
+                setCurrentStep('interview')
+                setMessages([])
+                setQuestionCount(0)
+                generateInterviewQuestion(true)
+              }}
+              className="px-8 py-4 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl hover:from-gray-600 hover:to-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              🔁 Zelfde Instellingen
             </button>
           </div>
-        ) : (
-          /* Feedback Display */
-          <div className="space-y-6">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-              <MarkdownRenderer content={messages[messages.length - 1].content} />
-              
-              <ResponseActions 
-                content={messages[messages.length - 1].content}
-                isMarkdown={true}
-                isStreaming={false}
-                className="mt-4"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Action Buttons */}
-        <div className="flex justify-center space-x-4 mt-8">
-          <button
-            onClick={resetSession}
-            className="px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-colors"
-          >
-            🔄 Nieuw Gesprek
-          </button>
-          <button
-            onClick={() => {
-              setCurrentStep('interview')
-              setMessages([])
-              setQuestionCount(0)
-              generateInterviewQuestion(true)
-            }}
-            className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
-          >
-            🔁 Zelfde Instellingen
-          </button>
         </div>
       </div>
     )
