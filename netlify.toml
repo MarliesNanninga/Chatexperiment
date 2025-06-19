@@ -22,7 +22,15 @@
     Access-Control-Allow-Methods = "GET, POST, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type, Authorization"
 
+# Ensure API routes work properly on Netlify
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
+
+# Handle client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200

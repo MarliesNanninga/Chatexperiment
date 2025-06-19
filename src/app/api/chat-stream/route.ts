@@ -13,22 +13,26 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Check API key
+    // Check API key with detailed logging
     if (!process.env.GEMINI_API_KEY) {
-      console.error('GEMINI_API_KEY not found in environment variables')
+      console.error('❌ GEMINI_API_KEY not found in environment variables')
+      console.log('Available env vars:', Object.keys(process.env).filter(key => key.includes('GEMINI')))
       return NextResponse.json(
         { 
           error: 'API configuratie ontbreekt. Check Environment Variables.',
-          hint: 'Voeg GEMINI_API_KEY toe aan je environment variables',
-          debug: 'GEMINI_API_KEY is not set in Netlify environment'
+          hint: 'Voeg GEMINI_API_KEY toe aan je Netlify environment variables',
+          debug: 'GEMINI_API_KEY is not set in environment',
+          availableKeys: Object.keys(process.env).filter(key => key.includes('GEMINI'))
         }, 
         { status: 500, headers: corsHeaders }
       )
     }
 
+    console.log('✅ GEMINI_API_KEY found for streaming, length:', process.env.GEMINI_API_KEY.length)
+
     // Parse request data
     const body = await request.json()
-    console.log('Streaming request received:', { hasMessage: !!body.message, aiModel: body.aiModel })
+    console.log('📨 Streaming request received:', { hasMessage: !!body.message, aiModel: body.aiModel })
     
     const { message, aiModel = 'smart' } = body
 
@@ -52,17 +56,20 @@ export async function POST(request: NextRequest) {
                      aiModel === 'smart' ? 'gemini-2.5-flash-preview-05-20' :
                      'gemini-2.0-flash-exp' // internet
     
-    console.log('Using streaming model:', modelName)
-    const model = genAI.getGenerativeModel({ model: modelName })
+    console.log('🤖 Using streaming model:', modelName)
 
     // Create streaming response
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          console.log('Starting content generation stream...')
+          console.log('🚀 Starting content generation stream...')
+          
+          const model = genAI.getGenerativeModel({ model: modelName })
           const result = await model.generateContentStream({
             contents: [{ role: 'user', parts: [{ text: message }] }]
           })
+
+          console.log('📡 Stream created, processing chunks...')
 
           // Stream the response token by token
           for await (const chunk of result.stream) {
@@ -79,7 +86,7 @@ export async function POST(request: NextRequest) {
                   new TextEncoder().encode(`data: ${data}\n\n`)
                 )
               } catch (error) {
-                console.log('Controller already closed, stopping stream')
+                console.log('⚠️ Controller already closed, stopping stream')
                 break
               }
             }
@@ -91,17 +98,27 @@ export async function POST(request: NextRequest) {
               new TextEncoder().encode(`data: ${JSON.stringify({ done: true })}\n\n`)
             )
             controller.close()
-            console.log('Stream completed successfully')
+            console.log('✅ Stream completed successfully')
           } catch (error) {
-            console.log('Controller already closed during completion')
+            console.log('⚠️ Controller already closed during completion')
           }
 
-        } catch (error) {
-          console.error('Streaming error:', error)
+        } catch (error: any) {
+          console.error('💥 Streaming error:', error)
+          
+          // Handle specific Gemini errors
+          let errorMessage = 'Streaming error occurred'
+          if (error.message?.includes('API_KEY_INVALID')) {
+            errorMessage = 'Ongeldige API key. Controleer je GEMINI_API_KEY.'
+          } else if (error.message?.includes('quota')) {
+            errorMessage = 'API quota overschreden. Probeer later opnieuw.'
+          } else if (error instanceof Error) {
+            errorMessage = error.message
+          }
           
           const errorData = JSON.stringify({
             error: true,
-            message: error instanceof Error ? error.message : 'Streaming error occurred',
+            message: errorMessage,
             details: error instanceof Error ? error.stack : undefined
           })
           
@@ -111,7 +128,7 @@ export async function POST(request: NextRequest) {
             )
             controller.close()
           } catch (controllerError) {
-            console.log('Could not send error to closed controller')
+            console.log('⚠️ Could not send error to closed controller')
           }
         }
       }
@@ -127,8 +144,8 @@ export async function POST(request: NextRequest) {
       },
     })
 
-  } catch (error) {
-    console.error('Streaming API error:', error)
+  } catch (error: any) {
+    console.error('💥 Streaming API error:', error)
     
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     
@@ -137,7 +154,7 @@ export async function POST(request: NextRequest) {
         error: 'Er is een fout opgetreden bij het verwerken van je bericht',
         details: errorMessage,
         timestamp: new Date().toISOString(),
-        stack: process.env.NODE_ENV === 'development' ? (error as Error).stack : undefined
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
       },
       { status: 500, headers: corsHeaders }
     )
